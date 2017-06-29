@@ -9663,9 +9663,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\Indusoftcr-be\\Indusoftcr-be\\Indusoftcr-be.csproj",
-      "projectName": "Indusoftcr-be",
-      "projectPath": "D:\\GitHub\\Indusoftcr-be\\Indusoftcr-be\\Indusoftcr-be.csproj",
+      "projectUniqueName": "D:\\GitHub\\Indusoftcr-be\\Indusoftcr-be\\Service.csproj",
+      "projectName": "Service",
+      "projectPath": "D:\\GitHub\\Indusoftcr-be\\Indusoftcr-be\\Service.csproj",
       "outputPath": "D:\\GitHub\\Indusoftcr-be\\Indusoftcr-be\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
