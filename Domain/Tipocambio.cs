@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public partial class Tipocambio
+    public partial class TipoCambio
     {
-        public Tipocambio()
+        public TipoCambio()
         {
             Cotizacion = new HashSet<Cotizacion>();
         }

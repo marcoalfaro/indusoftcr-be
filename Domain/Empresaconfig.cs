@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public partial class Empresaconfig
+    public partial class EmpresaConfig
     {
         public int Id { get; set; }
         public string Cedula { get; set; }

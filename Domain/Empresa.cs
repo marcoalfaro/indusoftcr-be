@@ -12,7 +12,7 @@ namespace Domain
             Linea = new HashSet<Linea>();
             Material = new HashSet<Material>();
             Precio = new HashSet<Precio>();
-            Tipocambio = new HashSet<Tipocambio>();
+            Tipocambio = new HashSet<TipoCambio>();
             Usuario = new HashSet<Usuario>();
             Vendedor = new HashSet<Vendedor>();
         }
@@ -23,11 +23,11 @@ namespace Domain
 
         public virtual ICollection<Cliente> Cliente { get; set; }
         public virtual ICollection<Cotizacion> Cotizacion { get; set; }
-        public virtual Empresaconfig Empresaconfig { get; set; }
+        public virtual EmpresaConfig EmpresaConfig { get; set; }
         public virtual ICollection<Linea> Linea { get; set; }
         public virtual ICollection<Material> Material { get; set; }
         public virtual ICollection<Precio> Precio { get; set; }
-        public virtual ICollection<Tipocambio> Tipocambio { get; set; }
+        public virtual ICollection<TipoCambio> Tipocambio { get; set; }
         public virtual ICollection<Usuario> Usuario { get; set; }
         public virtual ICollection<Vendedor> Vendedor { get; set; }
     }
