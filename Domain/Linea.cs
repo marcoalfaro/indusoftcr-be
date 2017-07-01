@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.Base;
 
 namespace Domain
 {
-    public partial class Linea
+    public class Linea: BaseEntity
     {
-        public int Id { get; set; }
         public int Empresaid { get; set; }
         public string Nombre { get; set; }
         public bool Activo { get; set; }

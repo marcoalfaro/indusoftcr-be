@@ -24,15 +24,15 @@ namespace Persistance
 
 				    entity.Property(e => e.Cedula).HasColumnName("cedula");
 
-				    entity.Property(e => e.Contactocorreo).HasColumnName("contactocorreo");
+				    entity.Property(e => e.ContactoCorreo).HasColumnName("contactocorreo");
 
-				    entity.Property(e => e.Contactoextension).HasColumnName("contactoextension");
+				    entity.Property(e => e.ContactoExtension).HasColumnName("contactoextension");
 
-				    entity.Property(e => e.Contactonombre).HasColumnName("contactonombre");
+				    entity.Property(e => e.ContactoNombre).HasColumnName("contactonombre");
 
-				    entity.Property(e => e.Contactotelefono).HasColumnName("contactotelefono");
+				    entity.Property(e => e.ContactoTelefono).HasColumnName("contactotelefono");
 
-				    entity.Property(e => e.Empresaid).HasColumnName("empresaid");
+				    entity.Property(e => e.EmpresaId).HasColumnName("empresaid");
 
 				    entity.Property(e => e.Nombre)
 					    .IsRequired()
@@ -42,7 +42,7 @@ namespace Persistance
 
 				    entity.HasOne(d => d.Empresa)
 					    .WithMany(p => p.Cliente)
-					    .HasForeignKey(d => d.Empresaid)
+					    .HasForeignKey(d => d.EmpresaId)
 					    .OnDelete(DeleteBehavior.Restrict)
 					    .HasConstraintName("cliente_empresaid_fkey");
 			    };

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Domain.Base;
 
 namespace Domain
 {
-    public partial class Empresa
+    public sealed class Empresa: BaseEntity
     {
         public Empresa()
         {
@@ -16,19 +16,18 @@ namespace Domain
             Usuario = new HashSet<Usuario>();
             Vendedor = new HashSet<Vendedor>();
         }
-
-        public int Id { get; set; }
+		
         public string Nombre { get; set; }
         public bool Activo { get; set; }
 
-        public virtual ICollection<Cliente> Cliente { get; set; }
-        public virtual ICollection<Cotizacion> Cotizacion { get; set; }
-        public virtual EmpresaConfig EmpresaConfig { get; set; }
-        public virtual ICollection<Linea> Linea { get; set; }
-        public virtual ICollection<Material> Material { get; set; }
-        public virtual ICollection<Precio> Precio { get; set; }
-        public virtual ICollection<TipoCambio> Tipocambio { get; set; }
-        public virtual ICollection<Usuario> Usuario { get; set; }
-        public virtual ICollection<Vendedor> Vendedor { get; set; }
+        public ICollection<Cliente> Cliente { get; set; }
+        public ICollection<Cotizacion> Cotizacion { get; set; }
+        public EmpresaConfig EmpresaConfig { get; set; }
+        public ICollection<Linea> Linea { get; set; }
+        public ICollection<Material> Material { get; set; }
+        public ICollection<Precio> Precio { get; set; }
+        public ICollection<TipoCambio> Tipocambio { get; set; }
+        public ICollection<Usuario> Usuario { get; set; }
+        public ICollection<Vendedor> Vendedor { get; set; }
     }
 }

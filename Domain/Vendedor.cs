@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Domain.Base;
 
 namespace Domain
 {
-    public partial class Vendedor
+    public class Vendedor: BaseEntity
     {
         public Vendedor()
         {
             Cotizacion = new HashSet<Cotizacion>();
         }
 
-        public int Id { get; set; }
         public int Empresaid { get; set; }
         public string Nombre { get; set; }
         public string Email { get; set; }

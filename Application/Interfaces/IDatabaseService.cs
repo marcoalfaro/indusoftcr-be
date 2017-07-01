@@ -15,7 +15,8 @@ namespace Application.Interfaces
 	    DbSet<TipoCambio> TipoCambios { get; set; }
 	    DbSet<Usuario> Usuarios { get; set; }
 	    DbSet<Vendedor> Vendedores { get; set; }
-
+		
 		void Save();
+	    DbSet<T> GetDbSet<T>() where T : class;
 	}
 }

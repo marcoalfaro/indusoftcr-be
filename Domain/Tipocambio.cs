@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Domain.Base;
 
 namespace Domain
 {
-    public partial class TipoCambio
+    public class TipoCambio: BaseEntity
     {
         public TipoCambio()
         {
             Cotizacion = new HashSet<Cotizacion>();
         }
-
-        public int Id { get; set; }
+        
         public int Empresaid { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Monto { get; set; }

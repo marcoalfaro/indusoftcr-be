@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.Base;
 
 namespace Domain
 {
-    public partial class EmpresaConfig
+    public class EmpresaConfig: BaseEntity
     {
-        public int Id { get; set; }
         public string Cedula { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }

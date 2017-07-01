@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain.Base;
 
 namespace Domain
 {
-    public partial class Precio
+    public class Precio: BaseEntity
     {
-        public int Id { get; set; }
         public int Empresaid { get; set; }
         public decimal Molde { get; set; }
         public decimal Tinta { get; set; }

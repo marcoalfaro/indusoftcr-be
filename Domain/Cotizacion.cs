@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using Domain.Base;
 
 namespace Domain
 {
-    public partial class Cotizacion
+    public class Cotizacion: BaseEntity
     {
-        public int Id { get; set; }
         public int Empresaid { get; set; }
         public int Clienteid { get; set; }
         public int Usuarioid { get; set; }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Domain.Base;
 
 namespace Domain
 {
-    public partial class Usuario
+    public class Usuario: BaseEntity
     {
         public Usuario()
         {

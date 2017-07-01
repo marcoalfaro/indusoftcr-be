@@ -2,7 +2,6 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Persistance
 {
     public class DatabaseService: DbContext, IDatabaseService
@@ -17,18 +16,18 @@ namespace Persistance
 	    public DbSet<TipoCambio> TipoCambios { get; set; }
 	    public DbSet<Usuario> Usuarios { get; set; }
 	    public DbSet<Vendedor> Vendedores { get; set; }
-
-		public void Save()
-		{
-			SaveChanges();
-		}
 		
-		// TODO:  How to get ConnString in .Net Core
-	    //<connectionStrings>
-	    //<add name = "CleanArchitecture" connectionString="Data Source=(local);Initial Catalog=CleanArchitecture;Integrated Security=true" providerName="System.Data.SqlClient" />
-	    //</connectionStrings>
+	    public DbSet<T> GetDbSet<T>() where T : class => Set<T>();
 
-	    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	    public void Save() => SaveChanges();
+
+	    public DatabaseService(DbContextOptions<DatabaseService> options) :base(options)
+	    { }
+
+	    public DatabaseService()
+	    { }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
 	    {
 		    base.OnModelCreating(modelBuilder);
 
