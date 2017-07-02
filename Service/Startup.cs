@@ -1,8 +1,6 @@
-﻿using Application;
-using Application.Clientes;
+﻿using Application.Generic;
 using Application.Interfaces;
-using Domain;
-using Domain.Base;
+using Application.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Persistance;
+using IConfigurationProvider = AutoMapper.IConfigurationProvider;
 
 namespace Service
 {
@@ -34,7 +33,11 @@ namespace Service
 			services.AddMvc();
 			services.AddDbContext<DatabaseService>(options => options.UseNpgsql(Configuration.GetConnectionString("Indusoft")));
 			services.AddScoped(typeof(IGetListQuery<,>), typeof(GetListQuery<,>));
+			services.AddScoped(typeof(IGetDetailQuery<,>), typeof(GetDetailQuery<,>));
+			services.AddScoped(typeof(IGetActiveListQuery<,>), typeof(GetActiveListQuery<,>));
+			services.AddScoped(typeof(IGetItemListQuery<>), typeof(GetListItemQuery<>));
 			services.AddScoped<IDatabaseService, DatabaseService>();
+			services.AddSingleton<IConfigurationProvider>(EntityMapper.Configuration());
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

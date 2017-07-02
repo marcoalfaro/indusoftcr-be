@@ -1,14 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Application
+namespace Application.Generic
 {
     public interface IGetListQuery<TEntity, out TModel>
     {
 	    IEnumerable<TModel> Execute();
     }
-
-
-	//public interface IGetListQuery
-	//{
-	//}
 }

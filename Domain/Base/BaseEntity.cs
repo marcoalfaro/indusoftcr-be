@@ -11,7 +11,7 @@
 		    return entity != null && Id == entity.Id;
 	    }
 
-	    protected bool Equals(BaseEntity other)
+	    protected virtual bool Equals(BaseEntity other)
 	    {
 		    return Id == other.Id;
 	    }
