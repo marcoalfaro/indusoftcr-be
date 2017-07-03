@@ -1,10 +1,9 @@
-﻿using Domain.Base;
+﻿using Application.Generic;
 
 namespace Application.Clientes
 {
-    public class ClienteModel: ActivableEntity
+    public class ClienteModel: CompanyModel
     {
-	    public int EmpresaId { get; set; }
 	    public string Nombre { get; set; }
 	    public string Cedula { get; set; }
 	    public string Telefono { get; set; }
@@ -12,5 +11,5 @@ namespace Application.Clientes
 	    public string ContactoTelefono { get; set; }
 	    public string ContactoExtension { get; set; }
 	    public string ContactoCorreo { get; set; }
-    }
+	}
 }

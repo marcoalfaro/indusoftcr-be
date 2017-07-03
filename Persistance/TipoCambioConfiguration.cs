@@ -17,8 +17,9 @@ namespace Persistance
 					entity.ToTable("tipocambio");
 
 				    entity.Property(e => e.Id).HasColumnName("id");
+				    entity.Property(e => e.Activo).HasColumnName("activo").HasDefaultValueSql("true");
 
-				    entity.Property(e => e.Empresaid).HasColumnName("empresaid");
+					entity.Property(e => e.EmpresaId).HasColumnName("empresaid");
 
 				    entity.Property(e => e.Fecha).HasColumnName("fecha");
 
@@ -26,7 +27,7 @@ namespace Persistance
 
 				    entity.HasOne(d => d.Empresa)
 					    .WithMany(p => p.Tipocambio)
-					    .HasForeignKey(d => d.Empresaid)
+					    .HasForeignKey(d => d.EmpresaId)
 					    .OnDelete(DeleteBehavior.Restrict)
 					    .HasConstraintName("tipocambio_empresaid_fkey");
 				};

@@ -14,8 +14,15 @@ namespace Application.Mapping
 			    c.AddConditionalObjectMapper().Where((e, m) => e.Name == m.Name + "Model");
 
 			    c.CreateMap<Cliente, ListItem>();
+			    c.CreateMap<Cotizacion, ListItem>();
+			    c.CreateMap<Empresa, ListItem>();
+				c.CreateMap<Usuario, ListItem>();
+			    c.CreateMap<Vendedor, ListItem>();
+			    c.CreateMap<Material, ListItem>();
+			    c.CreateMap<TipoCambio, ListItemMonto>();
+			    c.CreateMap<Linea, ListItem>();
 
-		    });
+			});
 		}
 	}
 }

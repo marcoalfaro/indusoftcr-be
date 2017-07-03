@@ -3,7 +3,7 @@ using Domain.Base;
 
 namespace Domain
 {
-    public sealed class Empresa: BaseEntity
+    public class Empresa: ApplicationEntity
     {
         public Empresa()
         {
@@ -18,7 +18,6 @@ namespace Domain
         }
 		
         public string Nombre { get; set; }
-        public bool Activo { get; set; }
 
         public ICollection<Cliente> Cliente { get; set; }
         public ICollection<Cotizacion> Cotizacion { get; set; }

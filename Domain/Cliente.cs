@@ -3,14 +3,13 @@ using Domain.Base;
 
 namespace Domain
 {
-    public class Cliente: ActivableEntity
+    public class Cliente: CompanyEntity
     {
         public Cliente()
         {
             Cotizacion = new HashSet<Cotizacion>();
         }
-
-        public int EmpresaId { get; set; }
+        
         public string Nombre { get; set; }
         public string Cedula { get; set; }
         public string Telefono { get; set; }

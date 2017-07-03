@@ -20,7 +20,9 @@ namespace Persistance
 					    .HasColumnName("id")
 					    .ValueGeneratedNever();
 
-				    entity.Property(e => e.Cedula).HasColumnName("cedula");
+				    entity.Property(e => e.Activo).HasColumnName("activo").HasDefaultValueSql("true");
+
+					entity.Property(e => e.Cedula).HasColumnName("cedula");
 
 				    entity.Property(e => e.Direccion).HasColumnName("direccion");
 

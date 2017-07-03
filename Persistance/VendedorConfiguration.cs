@@ -20,13 +20,13 @@ namespace Persistance
 
 				    entity.Property(e => e.Activo)
 					    .HasColumnName("activo")
-					    .HasDefaultValueSql("false");
+					    .HasDefaultValueSql("true");
 
 				    entity.Property(e => e.Beeper).HasColumnName("beeper");
 
 				    entity.Property(e => e.Email).HasColumnName("email");
 
-				    entity.Property(e => e.Empresaid).HasColumnName("empresaid");
+				    entity.Property(e => e.EmpresaId).HasColumnName("empresaid");
 
 				    entity.Property(e => e.Nombre)
 					    .IsRequired()
@@ -36,7 +36,7 @@ namespace Persistance
 
 				    entity.HasOne(d => d.Empresa)
 					    .WithMany(p => p.Vendedor)
-					    .HasForeignKey(d => d.Empresaid)
+					    .HasForeignKey(d => d.EmpresaId)
 					    .OnDelete(DeleteBehavior.Restrict)
 					    .HasConstraintName("vendedor_empresaid_fkey");
 				};

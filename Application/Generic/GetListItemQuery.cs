@@ -8,7 +8,7 @@ using Domain.Base;
 namespace Application.Generic
 {
 	public class GetListItemQuery<TEntity> : IGetItemListQuery<TEntity>
-		where TEntity : ActivableEntity
+		where TEntity : ApplicationEntity
 	{
 		protected readonly IDatabaseService Db;
 		protected readonly IConfigurationProvider MapperConfiguration;
@@ -21,7 +21,10 @@ namespace Application.Generic
 
 		public virtual IEnumerable<ListItem> Execute()
 		{
-			return Db.GetDbSet<TEntity>().Where(x => x.Activo).ProjectTo<ListItem>(MapperConfiguration);
+			return Db.GetDbSet<TEntity>()
+				.Where(x => x.Activo)
+				.ProjectTo<ListItem>(MapperConfiguration)
+				.OrderBy(x => x.Nombre);
 		}
 	}
 }

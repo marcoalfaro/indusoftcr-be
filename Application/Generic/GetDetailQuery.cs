@@ -7,8 +7,8 @@ using Domain.Base;
 namespace Application.Generic
 {
 	public class GetDetailQuery<TEntity, TModel> : IGetDetailQuery<TEntity, TModel>
-		where TEntity : BaseEntity
-		where TModel : BaseEntity
+		where TEntity : ApplicationEntity
+		where TModel : ApplicationModel
 	{
 		protected readonly IDatabaseService Db;
 		protected readonly IConfigurationProvider MapperConfiguration;

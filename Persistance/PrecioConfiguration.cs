@@ -17,14 +17,15 @@ namespace Persistance
 				    entity.ToTable("precio");
 
 				    entity.Property(e => e.Id).HasColumnName("id");
+				    entity.Property(e => e.Activo).HasColumnName("activo").HasDefaultValueSql("true");
 
-				    entity.Property(e => e.Arte).HasColumnName("arte");
+					entity.Property(e => e.Arte).HasColumnName("arte");
 
 				    entity.Property(e => e.Corte).HasColumnName("corte");
 
-				    entity.Property(e => e.Empresaid).HasColumnName("empresaid");
+				    entity.Property(e => e.EmpresaId).HasColumnName("empresaid");
 
-				    entity.Property(e => e.Horaimpresion).HasColumnName("horaimpresion");
+				    entity.Property(e => e.HoraImpresion).HasColumnName("horaimpresion");
 
 				    entity.Property(e => e.Molde).HasColumnName("molde");
 
@@ -38,7 +39,7 @@ namespace Persistance
 
 				    entity.HasOne(d => d.Empresa)
 					    .WithMany(p => p.Precio)
-					    .HasForeignKey(d => d.Empresaid)
+					    .HasForeignKey(d => d.EmpresaId)
 					    .OnDelete(DeleteBehavior.Restrict)
 					    .HasConstraintName("precio_empresaid_fkey");
 				};

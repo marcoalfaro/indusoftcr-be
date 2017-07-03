@@ -20,7 +20,7 @@ namespace Persistance
 
 				    entity.Property(e => e.Activo)
 					    .HasColumnName("activo")
-					    .HasDefaultValueSql("false");
+					    .HasDefaultValueSql("true");
 
 				    entity.Property(e => e.Empresaid).HasColumnName("empresaid");
 
