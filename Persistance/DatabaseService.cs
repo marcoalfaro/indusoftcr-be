@@ -21,8 +21,9 @@ namespace Persistance
 
 	    public void Save() => SaveChanges();
 
-	    public DatabaseService(DbContextOptions<DatabaseService> options) :base(options)
-	    { }
+	    public DatabaseService(DbContextOptions<DatabaseService> options) : base(options)
+	    {
+	    }
 
 	    public DatabaseService()
 	    { }
