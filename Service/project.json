@@ -1,0 +1,41 @@
+﻿{
+  "dependencies": {
+    "Microsoft.AspNetCore": "1.1.2",
+    "Microsoft.AspNetCore.Mvc": "1.1.3",
+    "Microsoft.EntityFrameworkCore.Design": "1.1.2",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.2",
+    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.2",
+    "Microsoft.Extensions.Configuration.CommandLine": "1.1.2",
+    "Microsoft.Extensions.Logging.Debug": "1.1.2",
+    "Microsoft.VisualStudio.Web.BrowserLink": "1.1.2",
+    "Microsoft.VisualStudio.Web.CodeGeneration.Design": "1.1.1",
+    "Microsoft.AspNetCore.StaticFiles": "1.1.2"
+  },
+
+  "tools": {
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
+      "version": "1.0.0-preview1-final",
+      "imports": "portable-net45+win8+dnxcore50"
+    }
+  },
+
+  "frameworks": {
+    "netcoreapp1.1": {}
+  },
+
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "preserveCompilationContext": true
+  },
+
+  "publishOptions": {
+    "include": [
+      "wwwroot",
+      "web.config"
+    ]
+  },
+
+  "scripts": {
+    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+  }
+}
