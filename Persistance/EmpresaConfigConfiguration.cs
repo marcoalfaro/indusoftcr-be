@@ -30,37 +30,37 @@ namespace Persistance
 
 				    entity.Property(e => e.Fax).HasColumnName("fax");
 
-				    entity.Property(e => e.Impuestoventa).HasColumnName("impuestoventa");
+				    entity.Property(e => e.ImpuestoVenta).HasColumnName("impuestoventa");
 
-				    entity.Property(e => e.Precioarte)
+				    entity.Property(e => e.PrecioArte)
 					    .HasColumnName("precioarte")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciocorte)
+				    entity.Property(e => e.PrecioCorte)
 					    .HasColumnName("preciocorte")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciohoraimpresion)
+				    entity.Property(e => e.PrecioHoraImpresion)
 					    .HasColumnName("preciohoraimpresion")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciomolde)
+				    entity.Property(e => e.PrecioMolde)
 					    .HasColumnName("preciomolde")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciopositivo)
+				    entity.Property(e => e.PrecioPositivo)
 					    .HasColumnName("preciopositivo")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciosolvente)
+				    entity.Property(e => e.PrecioSolvente)
 					    .HasColumnName("preciosolvente")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciotinta)
+				    entity.Property(e => e.PrecioTinta)
 					    .HasColumnName("preciotinta")
 					    .HasDefaultValueSql("0");
 
-				    entity.Property(e => e.Preciovelocidad)
+				    entity.Property(e => e.PrecioVelocidad)
 					    .HasColumnName("preciovelocidad")
 					    .HasDefaultValueSql("0");
 
