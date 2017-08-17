@@ -5,10 +5,10 @@ namespace Domain
 {
     public class Cliente: CompanyEntity
     {
-        public Cliente()
-        {
-            Cotizacion = new HashSet<Cotizacion>();
-        }
+        //public Cliente()
+        //{
+        //    Cotizacion = new HashSet<Cotizacion>();
+        //}
         
         public string Nombre { get; set; }
         public string Cedula { get; set; }

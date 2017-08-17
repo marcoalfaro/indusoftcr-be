@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Application.Cotizaciones;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace Tests.Application
 {
@@ -11,120 +12,150 @@ namespace Tests.Application
 	public class EstimatorTest
 	{
 		private Estimator estimator;
-		private Cotizacion cotizacion;
+		private Cotizacion cot;
+		private Mock<Cotizacion> cotMock;
+
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			estimator = new Estimator();
-			cotizacion = new Cotizacion
-			{
-				Altura = 1,
-				Base = 1,
-				Cantidad = 1,
-				Rendimiento = 1,
-				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig() },
-				Material = new Material { Base = 1, Altura = 1 }
-			};
+			//cot = new Cotizacion
+			//{
+			//	Altura = 1,
+			//	Base = 1,
+			//	Cantidad = 1,
+			//	Rendimiento = 1,
+			//	Empresa = new Empresa { EmpresaConfig = new EmpresaConfig() },
+			//	Material = new Material { Base = 1, Altura = 1 }
+			//};
+			cotMock = new Mock<Cotizacion>();
+			cotMock.Setup(x => x.Altura).Returns(1);
+			cotMock.Setup(x => x.Base).Returns(1);
+			cotMock.Setup(x => x.Cantidad).Returns(1);
+			cotMock.Setup(x => x.Material).Returns(new Material { Base = 1, Altura = 1 });
+			cotMock.Setup(x => x.Empresa).Returns(new Empresa { EmpresaConfig = new EmpresaConfig() });
 
+			cot = cotMock.Object;
+			estimator = new Estimator(cot);
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
-		public void Estimate_ValidateNullCot_ExceptionThrown()
+		public void Validate_NullCot_ExceptionThrown()
 		{
-			cotizacion = null;
-			estimator.Estimate(cotizacion);
+			cot = null;
+			var dummy = new Estimator(cot);
 		}
 
 		[TestMethod, ExpectedException(typeof(ArgumentException))]
-		public void Estimate_ValidateNullMaterial_ExceptionThrown()
+		public void Validate_NullMaterial_ExceptionThrown()
 		{
-			cotizacion.Material = null;
-			estimator.Estimate(cotizacion);
+			cotMock.Setup(x => x.Material).Returns((Material)null);
+			var dummy = new Estimator(cot);
 		}
 
 		[TestMethod]
-		public void Estimate_RendimientosSinDesperdicio_RendimientoExacto()
+		public void Estimate_EstimateAll_AllMethodsCalled()
 		{
-			cotizacion.Base = 1;
-			cotizacion.Altura = 2;
-			cotizacion.Material = new Material { Base = 10, Altura = 20 };
+			//	Use mocks to check calls to all methods
+		}
+		
+		
+		[TestMethod]
+		public void CalcularRendimientos_SinDesperdicio_RendimientoExacto()
+		{
+			cotMock.Setup(x => x.Altura).Returns(1);
+			cotMock.Setup(x => x.Base).Returns(2);
+			cot.Material.Base = 10;
+			cot.Material.Altura = 20;
 
-			estimator.Estimate(cotizacion);
+			estimator.CalcularRendimientos();
 
-			Assert.AreEqual(100, cotizacion.Rendimiento);
+			Assert.AreEqual(100, cot.Rendimiento);
 		}
 
 		[TestMethod]
-		public void Estimate_RendimientosConDesperdicio_RendimientoRedondeado()
+		public void CalcularRendimientos_ConDesperdicio_RendimientoRedondeado()
 		{
-			cotizacion.Base = 1;
-			cotizacion.Altura = 3;
-			cotizacion.Material = new Material { Base = 10, Altura = 20 };
+			cotMock.Setup(x => x.Altura).Returns(1);
+			cotMock.Setup(x => x.Base).Returns(3);
+			cot.Material.Base = 10;
+			cot.Material.Altura = 20;
 
-			estimator.Estimate(cotizacion);
+			estimator.CalcularRendimientos();
 
-			Assert.AreEqual(60, cotizacion.Rendimiento);
+			Assert.AreEqual(60, cot.Rendimiento);
 		}
 
 		[TestMethod]
-		public void Estimate_RendimientosSinDesperdicio_LargoYAnchoExacto()
+		public void CalcularRendimientos_SinDesperdicio_LargoYAnchoExacto()
 		{
-			cotizacion.Base = 1;
-			cotizacion.Altura = 2;
-			cotizacion.Cantidad = 100;
-			cotizacion.Material = new Material { Base = 10, Altura = 20 };
+			cotMock.Setup(x => x.Base).Returns(1);
+			cotMock.Setup(x => x.Altura).Returns(2);
+			cotMock.Setup(x => x.Cantidad).Returns(100);
+			cot.Material.Base = 10;
+			cot.Material.Altura = 20;
 
-			estimator.Estimate(cotizacion);
+			estimator.CalcularRendimientos();
 
-			Assert.AreEqual(10, cotizacion.DivLargo);
-			Assert.AreEqual(10, cotizacion.DivAncho);
-			Assert.AreEqual(1, cotizacion.Laminas);
+			Assert.AreEqual(10, cot.DivLargo);
+			Assert.AreEqual(10, cot.DivAncho);
+			AssertEqualDecimal(1, cot.Laminas);
 		}
 
 		[TestMethod]
 		public void CalcularRendimientos_ConDesperdicio_LargoYAnchoRedondeado()
 		{
-			cotizacion.Base = 1;
-			cotizacion.Altura = 3;
-			cotizacion.Cantidad = 100;
-			cotizacion.Material = new Material { Base = 10, Altura = 20 };
+			cotMock.Setup(x => x.Base).Returns(1);
+			cotMock.Setup(x => x.Altura).Returns(3);
+			cotMock.Setup(x => x.Cantidad).Returns(100);
+			cot.Material.Base = 10;
+			cot.Material.Altura = 20;
 
-			estimator.Estimate(cotizacion);
+			estimator.CalcularRendimientos();
 
-			AssertEqualDecimal(6.66m, cotizacion.DivLargo);
-			AssertEqualDecimal(10, cotizacion.DivAncho);
-			AssertEqualDecimal(1.66m, cotizacion.Laminas);
+			AssertEqualDecimal(6.66m, cot.DivLargo);
+			AssertEqualDecimal(10, cot.DivAncho);
+			AssertEqualDecimal(1.66m, cot.Laminas);
 		}
 
 		[TestMethod]
 		public void CalcularRendimientos_OrientacionInvertida_LargoYAnchoRedondeado()
 		{
-			cotizacion.Base = 3;
-			cotizacion.Altura = 5;
-			cotizacion.Cantidad = 100;
-			cotizacion.Material = new Material { Base = 10, Altura = 30 };
+			cotMock.Setup(x => x.Base).Returns(3);
+			cotMock.Setup(x => x.Altura).Returns(5);
+			cotMock.Setup(x => x.Cantidad).Returns(100);
+			cot.Material.Base = 10;
+			cot.Material.Altura = 30;
+			
+			estimator.CalcularRendimientos();
 
-			estimator.Estimate(cotizacion);
-
-			AssertEqualDecimal(2, cotizacion.DivLargo);
-			AssertEqualDecimal(10, cotizacion.DivAncho);
-			AssertEqualDecimal(5, cotizacion.Laminas);
+			AssertEqualDecimal(2, cot.DivLargo);
+			AssertEqualDecimal(10, cot.DivAncho);
+			AssertEqualDecimal(5, cot.Laminas);
 		}
 
-		[TestMethod]
-		public void CalcularPrecioMaterial()
-		{
-			cotizacion.Empresa.EmpresaConfig.ImpuestoVenta = 10m;
-			cotizacion.Material = new Material { CostoInventario = 100, Base = 1, Altura = 1 };
-			cotizacion.Laminas = 5;
+		//[TestMethod]
+		//public void CalcularPrecioMaterial()
+		//{
+		//	//cot.Empresa.EmpresaConfig.ImpuestoVenta = 10m;
+		//	//cot.Material = new Material { CostoInventario = 100, Base = 1, Altura = 1 };
+		//	//cot.Laminas = 5;
 
-			// Idea: Use cotizacionMock 
+		//	// Idea: Use cotMock 
+		//	var mock = new Mock<Cotizacion>();
+		//	mock.Setup(x => x.Laminas).Returns(5);
+		//	mock.Setup(x => x.Material).Returns(new Material { CostoInventario = 100, Base = 1, Altura = 1 });
+		//	mock.Setup(x => x.Empresa).Returns(new Empresa { EmpresaConfig = new EmpresaConfig { ImpuestoVenta = 10m } });
 
-			estimator.Estimate(cotizacion);
+		//	mock.Setup(x => x.Altura).Returns(1);
+		//	mock.Setup(x => x.Base).Returns(1);
+		//	mock.Setup(x => x.Cantidad).Returns(1);
 
-			Assert.AreEqual(550, cotizacion.PrecioMaterial);
-		}
+
+		//	estimator.Estimate(mock.Object);
+
+		//	Assert.AreEqual(550, mock.Object.PrecioMaterial);
+		//}
 
 		#region Helpers
 

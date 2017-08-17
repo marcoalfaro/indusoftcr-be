@@ -1,21 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using CloneExtensions;
 using Domain;
 
 namespace Application.Cotizaciones
 {
 	public class Estimator
 	{
-		private Cotizacion cot;
-		private EmpresaConfig config;
+		private readonly Cotizacion cot;
+		private readonly EmpresaConfig config;
 
-
-		public void Estimate(Cotizacion cotizacion)
+		public Estimator(Cotizacion cotizacion)
 		{
 			cot = cotizacion;
 			config = cotizacion?.Empresa?.EmpresaConfig;
 			Validate();
+		}
+
+		public void Estimate()
+		{
 			CalcularRendimientos();
 			CalcularPrecioMaterial();
+			
 
 			//PrecioTintas = cotizador.CalcularPrecioTintas(precio.Tinta);
 			//PrecioArte = cotizador.CalcularPrecioArte(precio.Arte);
