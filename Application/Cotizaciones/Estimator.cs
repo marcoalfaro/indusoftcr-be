@@ -21,11 +21,10 @@ namespace Application.Cotizaciones
 		{
 			CalcularRendimientos();
 			CalcularPrecioMaterial();
-			
+			CalcularPrecioTintas();
+			CalcularPrecioArte();
+			CalcularPrecioPositivo();
 
-			//PrecioTintas = cotizador.CalcularPrecioTintas(precio.Tinta);
-			//PrecioArte = cotizador.CalcularPrecioArte(precio.Arte);
-			//PrecioPositivo = cotizador.CalcularPrecioPositivo(precio.Positivo);
 			//PrecioMolde = cotizador.CalcularPrecioMolde(precio.Molde);
 			//PrecioSolvente = cotizador.CalcularPrecioSolvente(precio.Solvente);
 			//PrecioCorte = cotizador.CalcularPrecioCorte(precio.Corte);
@@ -76,6 +75,30 @@ namespace Application.Cotizaciones
 			cot.PrecioMaterial = cot.Laminas * AgregarPorcentaje(cot.Material.CostoInventario, config.ImpuestoVenta);
 		}
 
+		public void CalcularPrecioTintas()
+		{
+			cot.PrecioTintas = cot.Altura * cot.Base * cot.Empresa.EmpresaConfig.PrecioTinta * (cot.Cubrimiento / 100) * cot.Cantidad;
+		}
+
+		public void CalcularPrecioArte()
+		{
+			var costoArte = cot.Empresa.EmpresaConfig.PrecioArte;
+			cot.PrecioArte = Math.Max(cot.Tintas * costoArte, costoArte);
+		}
+
+		public void CalcularPrecioPositivo()
+		{
+			const int minPrecioPositivo = 2000;
+			var costoPositivo = cot.Empresa.EmpresaConfig.PrecioPositivo;
+			cot.PrecioPositivo = Math.Max(cot.Altura * cot.Base * cot.Montaje * costoPositivo * cot.Tintas, minPrecioPositivo);
+		}
+
+		//public decimal CalcularPrecioArte(decimal precioArte)
+		//{
+		//	return Math.Max(context.Tintas * precioArte, precioArte);
+		//}
+
+
 		//public decimal CalcularPrecioUnitario()
 		//   {
 		//    return context.TotalCol / context.Cantidad;
@@ -124,21 +147,8 @@ namespace Application.Cotizaciones
 		//    return Math.Max(precioMolde * context.Tintas, precioMolde);
 		//   }
 
-		//   public decimal CalcularPrecioPositivo(decimal precioPositivo)
-		//   {
-		//    const int minPrecioPositivo = 2000;
-		//    return Math.Max(context.Altura * context.Base * context.Montaje * precioPositivo * context.Tintas, minPrecioPositivo);
-		//   }
 
-		//   public decimal CalcularPrecioArte(decimal precioArte)
-		//   {
-		//    return Math.Max(context.Tintas * precioArte, precioArte);
-		//   }
 
-		//   public decimal CalcularPrecioTintas(decimal precioTinta)
-		//   {
-		//    return context.Altura * context.Base * precioTinta * (context.Cubrimiento / 100) * context.Cantidad;
-		//   }
 
 		//   public decimal CalcularPrecioImpresion(Precio precio)
 		//   {

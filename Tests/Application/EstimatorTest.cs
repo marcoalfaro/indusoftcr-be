@@ -59,7 +59,6 @@ namespace Tests.Application
 			//	Use mocks to check calls to all methods
 		}
 		
-		
 		[TestMethod]
 		public void CalcularRendimientos_SinDesperdicio_RendimientoExacto()
 		{
@@ -134,28 +133,120 @@ namespace Tests.Application
 			AssertEqualDecimal(5, cot.Laminas);
 		}
 
-		//[TestMethod]
-		//public void CalcularPrecioMaterial()
-		//{
-		//	//cot.Empresa.EmpresaConfig.ImpuestoVenta = 10m;
-		//	//cot.Material = new Material { CostoInventario = 100, Base = 1, Altura = 1 };
-		//	//cot.Laminas = 5;
+		[TestMethod]
+		public void CalcularPrecioMaterial()
+		{
+			var cotizacion = new Cotizacion
+			{
+				Altura = 1,
+				Base = 1,
+				Cubrimiento = 2,
+				Cantidad = 1,
+				Laminas = 5,
+				Material = new Material { CostoInventario = 100, Base = 1, Altura = 1 },
+				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig { ImpuestoVenta = 10m } }
+			};
+			var instance = new Estimator(cotizacion);
 
-		//	// Idea: Use cotMock 
-		//	var mock = new Mock<Cotizacion>();
-		//	mock.Setup(x => x.Laminas).Returns(5);
-		//	mock.Setup(x => x.Material).Returns(new Material { CostoInventario = 100, Base = 1, Altura = 1 });
-		//	mock.Setup(x => x.Empresa).Returns(new Empresa { EmpresaConfig = new EmpresaConfig { ImpuestoVenta = 10m } });
+			instance.CalcularPrecioMaterial();
 
-		//	mock.Setup(x => x.Altura).Returns(1);
-		//	mock.Setup(x => x.Base).Returns(1);
-		//	mock.Setup(x => x.Cantidad).Returns(1);
+			Assert.AreEqual(550, cotizacion.PrecioMaterial);
+		}
+		
+		[TestMethod]
+		public void CalcularPrecioTintas()
+		{
+			var cotizacion = new Cotizacion
+			{
+				Altura = 10,
+				Base = 20,
+				Cubrimiento = 2,
+				Cantidad = 5,
+				Material = new Material(),
+				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig { PrecioTinta = 10m } }
+			};
+			
+			var instance = new Estimator(cotizacion);
 
+			instance.CalcularPrecioTintas();
 
-		//	estimator.Estimate(mock.Object);
+			Assert.AreEqual(200, cotizacion.PrecioTintas);
+		}
 
-		//	Assert.AreEqual(550, mock.Object.PrecioMaterial);
-		//}
+		[TestMethod]
+		public void CalcularPrecioArte_TintasMenora1_RetornaPrecioArte()
+		{
+			var cotizacion = new Cotizacion
+			{
+				Tintas = 0.5m,
+				Material = new Material(),
+				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig { PrecioArte = 10m } }
+			};
+
+			var instance = new Estimator(cotizacion);
+
+			instance.CalcularPrecioArte();
+
+			Assert.AreEqual(10, cotizacion.PrecioArte);
+		}
+
+		[TestMethod]
+		public void CalcularPrecioArte_TintasMayora1_RetornaPrecioArtePorTintas()
+		{
+			var cotizacion = new Cotizacion
+			{
+				Tintas = 5,
+				Material = new Material(),
+				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig { PrecioArte = 10m } }
+			};
+
+			var instance = new Estimator(cotizacion);
+
+			instance.CalcularPrecioArte();
+
+			Assert.AreEqual(50, cotizacion.PrecioArte);
+		}
+
+		[TestMethod]
+		public void CalcularPrecioPositivo_ResultadoMayorA2000_RetornaMultiplicacion()
+		{
+			var cotizacion = new Cotizacion
+			{
+				Base = 10,
+				Altura = 10,
+				Montaje = 2,
+				Tintas = 2,
+				Material = new Material(),
+				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig { PrecioPositivo = 10m } }
+			};
+
+			var instance = new Estimator(cotizacion);
+
+			instance.CalcularPrecioPositivo();
+
+			Assert.AreEqual(4000, cotizacion.PrecioPositivo);
+		}
+
+		[TestMethod]
+		public void CalcularPrecioPositivo_ResultadoMenorA2000_Retorna2000()
+		{
+			var cotizacion = new Cotizacion
+			{
+				Base = 1,
+				Altura = 1,
+				Montaje = 1,
+				Tintas = 1,
+				Material = new Material(),
+				Empresa = new Empresa { EmpresaConfig = new EmpresaConfig { PrecioPositivo = 10m } }
+			};
+
+			var instance = new Estimator(cotizacion);
+
+			instance.CalcularPrecioPositivo();
+
+			Assert.AreEqual(2000m, cotizacion.PrecioPositivo);
+		}
+		
 
 		#region Helpers
 

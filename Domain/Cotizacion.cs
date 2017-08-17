@@ -18,10 +18,10 @@ namespace Domain
         public decimal? TotalUsd { get; set; }
         public decimal? TotalCol { get; set; }
         public virtual int Cantidad { get; set; }
-        public decimal? Montaje { get; set; }
+        public decimal Montaje { get; set; }
         public virtual decimal Base { get; set; }
         public virtual decimal Altura { get; set; }
-        public decimal? Tintas { get; set; }
+        public decimal Tintas { get; set; }
         public decimal? Cubrimiento { get; set; }
         public decimal? Troquel { get; set; }
         public decimal? Doblez { get; set; }
