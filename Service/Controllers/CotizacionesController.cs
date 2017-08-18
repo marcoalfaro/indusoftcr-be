@@ -25,8 +25,13 @@ namespace Service.Controllers
 	    {
 		    return allQuery.Execute();
 	    }
-		
-	    public CotizacionModel GetDetail(int id)
+
+	    //public IEnumerable<CotizacionModel> Get()
+	    //{
+		   // return allQuery.Execute();
+	    //}
+
+		public CotizacionModel GetDetail(int id)
 	    {
 		    return detailsQuery.Execute(id);
 	    }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using CloneExtensions;
 using Domain;
 
 namespace Application.Cotizaciones
@@ -24,16 +22,14 @@ namespace Application.Cotizaciones
 			CalcularPrecioTintas();
 			CalcularPrecioArte();
 			CalcularPrecioPositivo();
-
-			//PrecioMolde = cotizador.CalcularPrecioMolde(precio.Molde);
-			//PrecioSolvente = cotizador.CalcularPrecioSolvente(precio.Solvente);
-			//PrecioCorte = cotizador.CalcularPrecioCorte(precio.Corte);
-			//PrecioImpresion = cotizador.CalcularPrecioImpresion(precio);
-			//Subtotal = cotizador.CalcularSubtotal();
-			//TotalCol = cotizador.CalcularTotalCol();
-			//TotalUsd = cotizador.CalcularTotalUsd();
-			//PrecioUnitario = cotizador.CalcularPrecioUnitario();
-
+			CalcularPrecioMolde();
+			CalcularPrecioSolvente();
+			CalcularPrecioCorte();
+			CalcularPrecioImpresion();
+			CalcularSubtotal();
+			CalcularTotalCol();
+			CalcularTotalUsd();
+			CalcularPrecioUnitario();
 		}
 
 		private void Validate()
@@ -45,7 +41,7 @@ namespace Application.Cotizaciones
 				throw new ArgumentException("Material cannot be Null");
 		}
 
-		public void CalcularRendimientos()
+		public virtual void CalcularRendimientos()
 		{
 			var materialBaseEntreAltura = cot.Material.Base / cot.Altura;
 			var materialAlturaEntreBase = cot.Material.Altura / cot.Base;
@@ -70,93 +66,87 @@ namespace Application.Cotizaciones
 			cot.Laminas = cot.Cantidad / cot.Rendimiento;
 		}
 
-		public void CalcularPrecioMaterial()
+		public virtual void CalcularPrecioMaterial()
 		{
 			cot.PrecioMaterial = cot.Laminas * AgregarPorcentaje(cot.Material.CostoInventario, config.ImpuestoVenta);
 		}
 
-		public void CalcularPrecioTintas()
+		public virtual void CalcularPrecioTintas()
 		{
 			cot.PrecioTintas = cot.Altura * cot.Base * cot.Empresa.EmpresaConfig.PrecioTinta * (cot.Cubrimiento / 100) * cot.Cantidad;
 		}
 
-		public void CalcularPrecioArte()
+		public virtual void CalcularPrecioArte()
 		{
 			var costoArte = cot.Empresa.EmpresaConfig.PrecioArte;
 			cot.PrecioArte = Math.Max(cot.Tintas * costoArte, costoArte);
 		}
 
-		public void CalcularPrecioPositivo()
+		public virtual void CalcularPrecioPositivo()
 		{
 			const int minPrecioPositivo = 2000;
 			var costoPositivo = cot.Empresa.EmpresaConfig.PrecioPositivo;
 			cot.PrecioPositivo = Math.Max(cot.Altura * cot.Base * cot.Montaje * costoPositivo * cot.Tintas, minPrecioPositivo);
 		}
 
-		//public decimal CalcularPrecioArte(decimal precioArte)
-		//{
-		//	return Math.Max(context.Tintas * precioArte, precioArte);
-		//}
+		public virtual void CalcularPrecioMolde()
+		{
+			var costoMolde = cot.Empresa.EmpresaConfig.PrecioMolde;
+			cot.PrecioMolde = Math.Max(costoMolde * cot.Tintas, costoMolde);
+		}
 
+		public virtual void CalcularPrecioSolvente()
+		{
+			var costoSolvente = cot.Empresa.EmpresaConfig.PrecioSolvente;
+			cot.PrecioSolvente = Math.Max(costoSolvente * cot.Tintas, costoSolvente);
+		}
 
-		//public decimal CalcularPrecioUnitario()
-		//   {
-		//    return context.TotalCol / context.Cantidad;
-		//   }
+		public virtual void CalcularPrecioCorte()
+		{
+			var costoCorte = cot.Empresa.EmpresaConfig.PrecioCorte;
+			cot.PrecioCorte =  Math.Max(costoCorte * (cot.Cantidad / 1000m), costoCorte);
+		}
 
-		//   public decimal CalcularTotalCol()
-		//   {
-		//    var sinEvento = AgregarPorcentaje(context.Subtotal, context.Empresa.Utilidad);
-		//    return context.Evento ? AgregarPorcentaje(sinEvento, context.PorcEvento) : sinEvento;
-		//   }
+		public virtual void CalcularPrecioImpresion()
+		{
+			var costoHoraImpresion = cot.Empresa.EmpresaConfig.PrecioHoraImpresion;
+			var costoVelocidad = cot.Empresa.EmpresaConfig.PrecioVelocidad;
+			cot.PrecioImpresion = Math.Max((cot.Cantidad / cot.Montaje * cot.Tintas) / costoVelocidad * costoHoraImpresion, costoHoraImpresion);
+		}
 
-		//   public decimal CalcularTotalUsd()
-		//   {
-		//    return context.TotalCol / context.TipoCambio.Monto;
-		//   }
+		public virtual void CalcularSubtotal()
+		{
+			var suma = cot.PrecioMaterial +
+			           cot.PrecioTintas +
+					   cot.PrecioArte +
+					   cot.PrecioPositivo +
+					   cot.PrecioMolde +
+					   cot.PrecioSolvente +
+					   cot.PrecioCorte +
+					   cot.PrecioImpresion +
+					   cot.Troquel +
+					   cot.Doblez +
+					   cot.Cuatricromia +
+					   cot.Otro;
+			cot.Subtotal = Math.Round(suma, 2);
+		}
 
-		//   public decimal CalcularSubtotal()
-		//   {
-		//    var suma = context.PrecioMaterial +
-		//               context.PrecioTintas +
-		//               context.PrecioArte +
-		//               context.PrecioPositivo +
-		//               context.PrecioMolde +
-		//               context.PrecioSolvente +
-		//               context.PrecioCorte +
-		//               context.PrecioImpresion +
-		//               context.Troquel +
-		//               context.Doblez +
-		//               context.Cuatricromia +
-		//               context.Otro;
-		//    return Math.Round(suma, 2);
-		//   }
+		public virtual void CalcularTotalCol()
+		{
+			var sinEvento = AgregarPorcentaje(cot.Subtotal, cot.Empresa.EmpresaConfig.Utilidad);
+			cot.TotalCol = cot.PorcEvento > 0 ? AgregarPorcentaje(sinEvento, cot.PorcEvento) : sinEvento;
+		}
 
-		//   public decimal CalcularPrecioCorte(decimal precioCorte)
-		//   {
-		//    return Math.Max(precioCorte * (context.Cantidad / 1000m), precioCorte);
-		//   }
+		public virtual void CalcularTotalUsd()
+		{
+			cot.TotalUsd = cot.TotalCol / cot.TipoCambio.Monto;
+		}
+		public virtual void CalcularPrecioUnitario()
+		{
+			cot.PrecioUnitario = cot.TotalCol / cot.Cantidad;
+		}
 
-		//   public decimal CalcularPrecioSolvente(decimal precioSolvente)
-		//   {
-		//    return Math.Max(precioSolvente * context.Tintas, precioSolvente);
-		//   }
-
-		//   public decimal CalcularPrecioMolde(decimal precioMolde)
-		//   {
-		//    return Math.Max(precioMolde * context.Tintas, precioMolde);
-		//   }
-
-
-
-
-		//   public decimal CalcularPrecioImpresion(Precio precio)
-		//   {
-		//    return Math.Max((context.Cantidad / context.Montaje * context.Tintas) / precio.Velocidad * precio.HoraImpresion
-		//	    , precio.HoraImpresion);
-		//   }
-
-		public decimal AgregarPorcentaje(decimal monto, decimal porcentaje)
+		private decimal AgregarPorcentaje(decimal monto, decimal porcentaje)
 		{
 			return monto + (monto * porcentaje / 100);
 		}
