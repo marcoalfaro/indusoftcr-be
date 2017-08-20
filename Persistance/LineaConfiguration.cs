@@ -22,7 +22,7 @@ namespace Persistance
 					    .HasColumnName("activo")
 					    .HasDefaultValueSql("true");
 
-				    entity.Property(e => e.Empresaid).HasColumnName("empresaid");
+				    entity.Property(e => e.EmpresaId).HasColumnName("empresaid");
 
 				    entity.Property(e => e.Nombre)
 					    .IsRequired()
@@ -30,7 +30,7 @@ namespace Persistance
 
 				    entity.HasOne(d => d.Empresa)
 					    .WithMany(p => p.Linea)
-					    .HasForeignKey(d => d.Empresaid)
+					    .HasForeignKey(d => d.EmpresaId)
 					    .OnDelete(DeleteBehavior.Restrict)
 					    .HasConstraintName("linea_empresaid_fkey");
 				};

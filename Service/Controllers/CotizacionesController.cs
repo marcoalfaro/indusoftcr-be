@@ -21,19 +21,32 @@ namespace Service.Controllers
 		    this.detailsQuery = detailsQuery;
 	    }
 
-	    public IEnumerable<CotizacionModel> Get()
+	    public IActionResult Get()
 	    {
-		    return allQuery.Execute();
+		    return Ok(allQuery.Execute());
 	    }
 
-	    //public IEnumerable<CotizacionModel> Get()
-	    //{
-		   // return allQuery.Execute();
-	    //}
-
-		public CotizacionModel GetDetail(int id)
+	    public IActionResult Put([FromBody] CotizacionModel updated)
 	    {
-		    return detailsQuery.Execute(id);
+		    if (!ModelState.IsValid)
+			    return BadRequest();
+
+
+		    return Ok();
+	    }
+
+		//public virtual HttpResponseMessage Put([FromBody] TViewModel updated)
+		//{
+		//	var result = DbSet.Update(updated);
+		//	if (result == null)
+		//		return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Record was not found in database");
+		//	DbContext.SaveChanges();
+		//	return Request.CreateResponse(HttpStatusCode.OK);
+		//}
+
+		public IActionResult GetDetail(int id)
+	    {
+		    return Ok(detailsQuery.Execute(id));
 	    }
 	}
 }

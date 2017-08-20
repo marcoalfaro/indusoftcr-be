@@ -141,6 +141,7 @@ namespace Application.Cotizaciones
 		{
 			cot.TotalUsd = cot.TotalCol / cot.TipoCambio.Monto;
 		}
+
 		public virtual void CalcularPrecioUnitario()
 		{
 			cot.PrecioUnitario = cot.TotalCol / cot.Cantidad;

@@ -1,6 +1,10 @@
 ﻿using Application.Generic;
 using Application.Interfaces;
+using Application.Lineas;
 using Application.Mapping;
+using AutoMapper;
+using AutoMapper.EquivalencyExpression;
+using Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +54,33 @@ namespace Service
 			{
 				routes.MapRoute("withNoAction", "{controller=Home}/{id?}");
 				routes.MapRoute("default", "{controller=Home}/{action?}/{id?}");
+				
+			});
+
+			MapEntities();
+
+			//config.MapHttpAttributeRoutes();
+
+			//config.Routes.MapHttpRoute(
+			//	name: "DefaultApi",
+			//	routeTemplate: "api/{controller}/{id}",
+			//	defaults: new { id = RouteParameter.Optional }
+
+		}
+
+		private static void MapEntities()
+		{
+			Mapper.Initialize(cfg =>
+			{
+				cfg.AddCollectionMappers();
+
+				cfg.CreateMap<Linea, LineaModel>();
+				cfg.CreateMap<LineaModel, Linea>();
+
+				
+				//cfg.CreateMap<ServiceModel, Service>()
+				//	.ForMember(m => m.Id, opt => opt.Ignore());
+
 			});
 		}
 	}
