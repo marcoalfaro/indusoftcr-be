@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Application.Base;
 using Application.Empresas;
-using Application.Generic;
 using Domain;
 using Domain.Base;
 

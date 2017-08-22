@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Application.Generic;
+using Application.Base;
 using Application.Vendedores;
 using Domain;
 using Domain.Base;

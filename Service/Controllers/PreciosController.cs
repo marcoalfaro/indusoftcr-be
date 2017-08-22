@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Application.Base;
 using Application.Precios;
-using Application.Generic;
 using Domain;
 
 namespace Service.Controllers

@@ -1,7 +1,12 @@
-﻿using Application.Generic;
+﻿using Application.Base;
+using Application.Clientes;
+using Application.Cotizaciones;
 using Application.Interfaces;
 using Application.Lineas;
 using Application.Mapping;
+using Application.Materiales;
+using Application.TipoCambios;
+using Application.Vendedores;
 using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using Domain;
@@ -50,12 +55,14 @@ namespace Service
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
 
-			app.UseMvc(routes =>
-			{
-				routes.MapRoute("withNoAction", "{controller=Home}/{id?}");
-				routes.MapRoute("default", "{controller=Home}/{action?}/{id?}");
+			//app.UseMvc(routes =>
+			//{
+			//	//routes.Ma
+			//	//routes.MapRoute("withNoAction", "{controller=Home}/{id?}");
+			//	//routes.MapRoute("default", "{controller=Home}/{action?}/{id?}");
 				
-			});
+			//});
+			app.UseMvcWithDefaultRoute();
 
 			MapEntities();
 
@@ -76,8 +83,17 @@ namespace Service
 
 				cfg.CreateMap<Linea, LineaModel>();
 				cfg.CreateMap<LineaModel, Linea>();
+				cfg.CreateMap<Cliente, ClienteModel>();
+				cfg.CreateMap<ClienteModel, Cliente>();
+				cfg.CreateMap<Material, MaterialModel>();
+				cfg.CreateMap<MaterialModel, Material>();
+				cfg.CreateMap<TipoCambio, TipoCambioModel>();
+				cfg.CreateMap<TipoCambioModel, TipoCambio>();
+				cfg.CreateMap<Vendedor, VendedorModel>();
+				cfg.CreateMap<VendedorModel, Vendedor>();
+				cfg.CreateMap<Cotizacion, CotizacionModel>();
+				cfg.CreateMap<CotizacionModel, Cotizacion>();
 
-				
 				//cfg.CreateMap<ServiceModel, Service>()
 				//	.ForMember(m => m.Id, opt => opt.Ignore());
 

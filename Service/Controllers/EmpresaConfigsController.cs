@@ -1,5 +1,5 @@
+using Application.Base;
 using Application.EmpresaConfigs;
-using Application.Generic;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 

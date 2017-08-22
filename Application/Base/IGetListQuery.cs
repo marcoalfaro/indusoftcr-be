@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Application.Generic
+namespace Application.Base
 {
     public interface IGetListQuery<TEntity, out TModel>
     {

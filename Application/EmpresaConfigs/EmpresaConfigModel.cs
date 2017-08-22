@@ -1,4 +1,4 @@
-﻿using Application.Generic;
+﻿using Application.Base;
 
 namespace Application.EmpresaConfigs
 {

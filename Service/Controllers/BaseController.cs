@@ -1,4 +1,5 @@
-﻿using Application.Generic;
+﻿using System.Linq;
+using Application.Base;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Base;
@@ -14,10 +15,27 @@ namespace Service.Controllers
 	{
 		public IDatabaseService DataService { get; set; }
 		public abstract DbSet<TEntity> DbSet { get; }
+		private readonly IGetListQuery<TEntity, TModel> allQuery;
+		private readonly IGetDetailQuery<TEntity, TModel> detailsQuery;
 
-		protected ControllerBase(IDatabaseService dataService)
+		protected ControllerBase(
+			IGetListQuery<TEntity, TModel> allQuery,
+			IGetDetailQuery<TEntity, TModel> detailsQuery,
+			IDatabaseService dataService)
 		{
 			DataService = dataService;
+			this.allQuery = allQuery;
+			this.detailsQuery = detailsQuery;
+		}
+
+		public IActionResult Get()
+		{
+			return Ok(allQuery.Execute());
+		}
+
+		public IActionResult GetDetail(int id)
+		{
+			return Ok(detailsQuery.Execute(id));
 		}
 
 		[HttpPost("[controller]")]
@@ -31,6 +49,19 @@ namespace Service.Controllers
 
 			DataService.Save();
 			return Created(Request?.GetUri() + "/" + entity.Id, Mapper.Map<TEntity, TModel>(entity));
+		}
+
+		[HttpPut("[controller]")]
+		public virtual IActionResult Put([FromBody] TModel model)
+		{
+			var entity = DbSet.FirstOrDefault(x => x.Id == model.Id);
+			if (entity == null)
+				return NotFound();
+			
+			model.UpdateEntityFields(entity);
+			DataService.Save();
+			
+			return Ok(Mapper.Map<TEntity, TModel>(entity));
 		}
 	}
 }

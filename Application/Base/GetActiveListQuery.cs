@@ -4,7 +4,7 @@ using Application.Interfaces;
 using AutoMapper;
 using Domain.Base;
 
-namespace Application.Generic
+namespace Application.Base
 {
 	public class GetActiveListQuery<TEntity, TModel> : GetListQuery<TEntity, TModel>, IGetActiveListQuery<TEntity, TModel>
 		where TEntity : ApplicationEntity

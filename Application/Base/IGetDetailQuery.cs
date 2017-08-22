@@ -1,4 +1,4 @@
-﻿namespace Application.Generic
+﻿namespace Application.Base
 {
 	public interface IGetDetailQuery<TEntity, out TModel>
 	{

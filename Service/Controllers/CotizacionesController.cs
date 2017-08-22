@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Application.Base;
 using Application.Cotizaciones;
-using Application.Generic;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 

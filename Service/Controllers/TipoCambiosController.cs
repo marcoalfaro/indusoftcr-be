@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Application.Base;
 using Application.TipoCambios;
-using Application.Generic;
 using Domain;
 
 namespace Service.Controllers

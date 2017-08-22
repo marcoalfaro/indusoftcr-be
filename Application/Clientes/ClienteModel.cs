@@ -1,4 +1,6 @@
-﻿using Application.Generic;
+﻿using Application.Base;
+using Domain;
+using Domain.Base;
 
 namespace Application.Clientes
 {
@@ -11,5 +13,18 @@ namespace Application.Clientes
 	    public string ContactoTelefono { get; set; }
 	    public string ContactoExtension { get; set; }
 	    public string ContactoCorreo { get; set; }
+
+	    public override void UpdateEntityFields(ApplicationEntity entity)
+	    {
+		    var cliente = (Cliente)entity;
+		    cliente.Nombre = Nombre;
+		    cliente.Cedula = Cedula;
+		    cliente.Telefono = Telefono;
+		    cliente.ContactoNombre = ContactoNombre;
+		    cliente.ContactoTelefono = ContactoTelefono;
+		    cliente.ContactoExtension = ContactoExtension;
+		    cliente.ContactoCorreo = ContactoCorreo;
+			base.UpdateEntityFields(cliente);
+	    }
 	}
 }

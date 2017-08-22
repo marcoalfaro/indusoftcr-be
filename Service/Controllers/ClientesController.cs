@@ -1,37 +1,31 @@
 ﻿using System.Collections.Generic;
+using Application.Base;
 using Application.Clientes;
-using Application.Generic;
+using Application.Interfaces;
 using Domain;
 using Domain.Base;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service.Controllers
 {
-	public class ClientesController: Controller
-    {
-	    private readonly IGetListQuery<Cliente, ClienteModel> allQuery;
+	public class ClientesController: ControllerBase<Cliente, ClienteModel>
+	{
 	    private readonly IGetActiveListQuery<Cliente, ClienteModel> activeQuery;
 	    private readonly IGetItemListQuery<Cliente> allItemsQuery;
-	    private readonly IGetDetailQuery<Cliente, ClienteModel> detailsQuery;
-
+		public override DbSet<Cliente> DbSet => DataService.Clientes;
 
 		public ClientesController(
 			IGetListQuery<Cliente, ClienteModel> allQuery,
 			IGetActiveListQuery<Cliente, ClienteModel> activeQuery,
 			IGetItemListQuery<Cliente> allItemsQuery,
-			IGetDetailQuery<Cliente, ClienteModel> detailsQuery
-			)
-	    {
-		    this.allQuery = allQuery;
+			IGetDetailQuery<Cliente, ClienteModel> detailsQuery,
+			IDatabaseService databaseService
+		) : base(allQuery, detailsQuery, databaseService)
+		{
 		    this.activeQuery = activeQuery;
 		    this.allItemsQuery = allItemsQuery;
-		    this.detailsQuery = detailsQuery;
 	    }
 		
-		public IEnumerable<ClienteModel> Get()
-	    {
-		    return allQuery.Execute();
-	    }
 	    public IEnumerable<ListItem> GetItemList()
 	    {
 		    return allItemsQuery.Execute();
@@ -41,10 +35,5 @@ namespace Service.Controllers
 		{
 			return activeQuery.Execute();
 		}
-
-	    public ClienteModel GetDetail(int id)
-	    {
-		    return detailsQuery.Execute(id);
-	    }
 	}
 }

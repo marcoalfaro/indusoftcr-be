@@ -5,7 +5,7 @@
 	    public static readonly int defaultId = -1;
 	    public int Id { get; set; }
 	    public bool Activo { get; set; }
-
+		
 		public override bool Equals(object obj)
 	    {
 		    var entity = obj as IApplicationEntity;

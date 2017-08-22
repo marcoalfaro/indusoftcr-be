@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Base;
 
-namespace Application.Generic
+namespace Application.Base
 {
 	public interface IGetItemListQuery<TEntity>
 	{

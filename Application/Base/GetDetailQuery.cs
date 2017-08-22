@@ -1,30 +1,30 @@
-using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Base;
 
-namespace Application.Generic
+namespace Application.Base
 {
-	public class GetListItemQuery<TEntity> : IGetItemListQuery<TEntity>
+	public class GetDetailQuery<TEntity, TModel> : IGetDetailQuery<TEntity, TModel>
 		where TEntity : ApplicationEntity
+		where TModel : ApplicationModel
 	{
 		protected readonly IDatabaseService Db;
 		protected readonly IConfigurationProvider MapperConfiguration;
 
-		public GetListItemQuery(IDatabaseService db, IConfigurationProvider mapperConfiguration)
+		public GetDetailQuery(IDatabaseService db, IConfigurationProvider mapperConfiguration)
 		{
 			Db = db;
 			MapperConfiguration = mapperConfiguration;
 		}
 
-		public virtual IEnumerable<ListItem> Execute()
+		public virtual TModel Execute(int id)
 		{
 			return Db.GetDbSet<TEntity>()
-				.Where(x => x.Activo)
-				.ProjectTo<ListItem>(MapperConfiguration)
-				.OrderBy(x => x.Nombre);
+				.Where(x => x.Id == id)
+				.ProjectTo<TModel>(MapperConfiguration)
+				.SingleOrDefault();
 		}
 	}
 }

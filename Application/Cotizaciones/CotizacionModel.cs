@@ -1,5 +1,5 @@
 ﻿using System;
-using Application.Generic;
+using Application.Base;
 using Domain.Base;
 
 namespace Application.Cotizaciones

@@ -1,35 +1,29 @@
 ﻿using System.Collections.Generic;
-using Application.Generic;
+using Application.Base;
+using Application.Interfaces;
 using Application.Materiales;
 using Domain;
 using Domain.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service.Controllers
 {
-    public class MaterialesController
-    {
-	    private readonly IGetListQuery<Material, MaterialModel> allQuery;
+    public class MaterialesController: ControllerBase<Material, MaterialModel>
+	{
 	    private readonly IGetActiveListQuery<Material, MaterialModel> activeQuery;
 	    private readonly IGetItemListQuery<Material> allItemsQuery;
-	    private readonly IGetDetailQuery<Material, MaterialModel> detailsQuery;
+	    public override DbSet<Material> DbSet => DataService.Materiales;
 
-
-	    public MaterialesController(
+		public MaterialesController(
 		    IGetListQuery<Material, MaterialModel> allQuery,
 		    IGetActiveListQuery<Material, MaterialModel> activeQuery,
 		    IGetItemListQuery<Material> allItemsQuery,
-		    IGetDetailQuery<Material, MaterialModel> detailsQuery
-	    )
-	    {
-		    this.allQuery = allQuery;
+		    IGetDetailQuery<Material, MaterialModel> detailsQuery,
+		    IDatabaseService databaseService
+		) : base(allQuery, detailsQuery, databaseService)
+		{
 		    this.activeQuery = activeQuery;
 		    this.allItemsQuery = allItemsQuery;
-		    this.detailsQuery = detailsQuery;
-	    }
-
-	    public IEnumerable<MaterialModel> Get()
-	    {
-		    return allQuery.Execute();
 	    }
 
 	    public IEnumerable<ListItem> GetItemList()
@@ -40,11 +34,6 @@ namespace Service.Controllers
 	    public IEnumerable<MaterialModel> GetActive()
 	    {
 		    return activeQuery.Execute();
-	    }
-
-	    public MaterialModel GetDetail(int id)
-	    {
-		    return detailsQuery.Execute(id);
 	    }
 	}
 }

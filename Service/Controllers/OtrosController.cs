@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application;
 using Application.Clientes;
-using Application.Generic;
 using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
