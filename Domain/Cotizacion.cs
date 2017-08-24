@@ -5,10 +5,10 @@ namespace Domain
 {
     public class Cotizacion: CompanyEntity
     {
-        public int ClienteId { get; set; }
+        public int? ClienteId { get; set; }
         public int UsuarioId { get; set; }
-        public int VendedorId { get; set; }
-        public int MaterialId { get; set; }
+        public int? VendedorId { get; set; }
+        public int? MaterialId { get; set; }
         public int TipocambioId { get; set; }
         public int? LineaId { get; set; }
         public DateTime? Fecha { get; set; }

@@ -2,10 +2,11 @@
 using Application.Base;
 using Application.TipoCambios;
 using Domain;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Service.Controllers
 {
-    public class TipoCambiosController
+    public class TipoCambiosController: Controller
     {
 	    private readonly IGetListQuery<TipoCambio, TipoCambioModel> allQuery;
 	    private readonly IGetDetailQuery<TipoCambio, TipoCambioModel> detailsQuery;

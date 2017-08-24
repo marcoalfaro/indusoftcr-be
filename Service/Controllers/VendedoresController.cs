@@ -1,50 +1,38 @@
-﻿using System.Collections.Generic;
-using Application.Base;
+﻿using Application.Base;
+using Application.Interfaces;
 using Application.Vendedores;
 using Domain;
-using Domain.Base;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service.Controllers
 {
-	public class VendedoresController: Controller
+	public class VendedoresController: ControllerBase<Vendedor, VendedorModel>
     {
-	    private readonly IGetListQuery<Vendedor, VendedorModel> allQuery;
 	    private readonly IGetActiveListQuery<Vendedor, VendedorModel> activeQuery;
 	    private readonly IGetItemListQuery<Vendedor> allItemsQuery;
-	    private readonly IGetDetailQuery<Vendedor, VendedorModel> detailsQuery;
-
-
+	    public override DbSet<Vendedor> DbSet => DataService.Vendedores;
+		
 		public VendedoresController(
 			IGetListQuery<Vendedor, VendedorModel> allQuery,
 			IGetActiveListQuery<Vendedor, VendedorModel> activeQuery,
 			IGetItemListQuery<Vendedor> allItemsQuery,
-			IGetDetailQuery<Vendedor, VendedorModel> detailsQuery
-			)
-	    {
-		    this.allQuery = allQuery;
+			IGetDetailQuery<Vendedor, VendedorModel> detailsQuery,
+			IDatabaseService databaseService
+		) : base(allQuery, detailsQuery, databaseService)
+		{   
 		    this.activeQuery = activeQuery;
 		    this.allItemsQuery = allItemsQuery;
-		    this.detailsQuery = detailsQuery;
-	    }
-		
-		public IEnumerable<VendedorModel> Get()
-	    {
-		    return allQuery.Execute();
-	    }
-	    public IEnumerable<ListItem> GetItemList()
-	    {
-		    return allItemsQuery.Execute();
 	    }
 
-		public IEnumerable<VendedorModel> GetActive()
-		{
-			return activeQuery.Execute();
-		}
-
-	    public VendedorModel GetDetail(int id)
+		public IActionResult GetItemList()
 	    {
-		    return detailsQuery.Execute(id);
+		    return Ok(allItemsQuery.Execute());
+	    }
+
+	    public IActionResult GetActive()
+	    {
+		    return Ok(activeQuery.Execute());
 	    }
 	}
 }
