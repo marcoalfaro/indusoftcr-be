@@ -95,22 +95,26 @@ namespace Service
 				cfg.CreateMap<Cotizacion, CotizacionModel>();
 				cfg.CreateMap<CotizacionModel, Cotizacion>()
 					.ForMember(m => m.Cliente, o => o.Ignore())
-					.ForMember(m => m.Empresa, o => o.Ignore())
 					.ForMember(m => m.Usuario, o => o.Ignore())
 					.ForMember(m => m.Vendedor, o => o.Ignore())
 					.ForMember(m => m.Material, o => o.Ignore())
+					.ForMember(m => m.Linea, o => o.Ignore())
 					.ForMember(m => m.TipoCambio, o => o.Ignore());
 				
-				//cfg.CreateMap<ListItem, Cliente>();
-				//cfg.CreateMap<ListItem, Empresa>();
-				//cfg.CreateMap<ListItem, Usuario>();
-				//cfg.CreateMap<ListItem, Vendedor>();
-				//cfg.CreateMap<ListItem, Material>();
-				//cfg.CreateMap<ListItemMonto, TipoCambio>();
-
-				//cfg.CreateMap<ServiceModel, Service>()
-				//	.ForMember(m => m.Id, opt => opt.Ignore());
-
+				cfg.CreateMap<ListItem, Linea>();
+				cfg.CreateMap<ListItem, Material>();
+				cfg.CreateMap<ListItem, Empresa>();
+				cfg.CreateMap<ListItem, Usuario>();
+				cfg.CreateMap<ListItem, Vendedor>();
+				cfg.CreateMap<ListItem, Material>();
+				cfg.CreateMap<ListItemMonto, TipoCambio>();
+				cfg.CreateMap<Linea, ListItem>();
+				cfg.CreateMap<Material, ListItem>();
+				cfg.CreateMap<Empresa, ListItem>();
+				cfg.CreateMap<Usuario, ListItem>();
+				cfg.CreateMap<Vendedor, ListItem>();
+				cfg.CreateMap<Material, ListItem>();
+				cfg.CreateMap<TipoCambio, ListItemMonto>();
 			});
 		}
 	}

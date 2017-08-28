@@ -134,7 +134,10 @@ namespace Application.Cotizaciones
 		public virtual void CalcularTotalCol()
 		{
 			var sinEvento = AgregarPorcentaje(cot.Subtotal, cot.Empresa.EmpresaConfig.Utilidad);
-			cot.TotalCol = cot.PorcEvento > 0 ? AgregarPorcentaje(sinEvento, cot.PorcEvento) : sinEvento;
+			if (cot.PorcEvento.HasValue)
+				cot.TotalCol = cot.PorcEvento > 0 ? AgregarPorcentaje(sinEvento, cot.PorcEvento.Value) : sinEvento;
+			else
+				cot.TotalCol = sinEvento;
 		}
 
 		public virtual void CalcularTotalUsd()

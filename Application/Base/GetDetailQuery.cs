@@ -20,7 +20,7 @@ namespace Application.Base
 		}
 
 		public virtual TModel Execute(int id)
-		{
+		{	
 			return Db.GetDbSet<TEntity>()
 				.Where(x => x.Id == id)
 				.ProjectTo<TModel>(MapperConfiguration)

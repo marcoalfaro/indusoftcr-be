@@ -46,14 +46,17 @@ namespace Service.Controllers
 
 			var entity = Mapper.Map<TModel, TEntity>(newModel);
 			DbSet.Add(entity);
-
 			DataService.Save();
-			return Created(Request?.GetUri() + "/" + entity.Id, Mapper.Map<TEntity, TModel>(entity));
+			newModel.Id = entity.Id;
+			return Created(Request?.GetUri() + "/" + entity.Id, newModel);
 		}
 
 		[HttpPut("[controller]")]
 		public virtual IActionResult Put([FromBody] TModel model)
 		{
+			if (!IsModelValid(model))
+				return BadRequest();
+
 			var entity = DbSet.FirstOrDefault(x => x.Id == model.Id);
 			if (entity == null)
 				return NotFound();
@@ -62,6 +65,11 @@ namespace Service.Controllers
 			DataService.Save();
 			
 			return Ok(Mapper.Map<TEntity, TModel>(entity));
+		}
+		
+		protected virtual bool IsModelValid(TModel model)
+		{
+			return model == null || !ModelState.IsValid;
 		}
 	}
 }

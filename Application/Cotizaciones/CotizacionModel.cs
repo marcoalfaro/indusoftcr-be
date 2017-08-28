@@ -7,7 +7,6 @@ namespace Application.Cotizaciones
 {
 	public class CotizacionModel : CompanyModel
 	{
-		public ListItem Empresa { get; set; }
 		public ListItem Cliente { get; set; }
 		public ListItem Usuario { get; set; }
 		public ListItem Vendedor { get; set; }
@@ -30,7 +29,7 @@ namespace Application.Cotizaciones
 		public decimal Doblez { get; set; }
 		public decimal Cuatricromia { get; set; }
 		public decimal Otro { get; set; }
-		public decimal PorcEvento { get; set; }
+		public decimal? PorcEvento { get; set; }
 		public bool Aplicada { get; set; }
 		public DateTime? FecAplicada { get; set; }
 		public DateTime? FecRegistro { get; set; }

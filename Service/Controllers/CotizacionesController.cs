@@ -1,7 +1,9 @@
-﻿using Application.Base;
+﻿using System;
+using Application.Base;
 using Application.Cotizaciones;
 using Application.Interfaces;
 using Domain;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Service.Controllers
@@ -17,15 +19,16 @@ namespace Service.Controllers
 		) : base(allQuery, detailsQuery, databaseService)
 		{
 	    }
-		
 
-		//public virtual HttpResponseMessage Put([FromBody] TViewModel updated)
-		//{
-		//	var result = DbSet.Update(updated);
-		//	if (result == null)
-		//		return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Record was not found in database");
-		//	DbContext.SaveChanges();
-		//	return Request.CreateResponse(HttpStatusCode.OK);
-		//}
+	    protected override bool IsModelValid(CotizacionModel model)
+	    {
+		    return base.IsModelValid(model) || model.Cliente != null;
+	    }
+		
+	    public override IActionResult Post([FromBody] CotizacionModel newModel)
+	    {
+		    newModel.Fecha = newModel.FecRegistro = DateTime.Now;
+			return base.Post(newModel);
+	    }
 	}
 }
