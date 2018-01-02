@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using Application.Base;
 using Application.Lineas;
 using Application.Interfaces;
@@ -26,10 +28,18 @@ namespace Service.Controllers
 		    this.allItemsQuery = allItemsQuery;
 	    }
 		
-	    public IEnumerable<ListItem> GetItemList()
-	    {
-		    return allItemsQuery.Execute();
-	    }
+	    //public IActionResult GetItemList()
+	    //{
+	    //    try
+	    //    {
+	    //        return Ok(allItemsQuery.Execute());
+                
+	    //    }
+	    //    catch (Exception ex)
+	    //    {
+	    //        return BadRequest(ex.Message);
+	    //    }
+	    //}
 
 	    public IEnumerable<LineaModel> GetActive()
 	    {
