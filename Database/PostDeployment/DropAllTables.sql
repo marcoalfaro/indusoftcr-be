@@ -1,0 +1,9 @@
+﻿drop table precio
+drop table cotizacion
+drop table linea
+drop table vendedor
+drop table material
+drop table tipoCambio
+drop table usuario
+drop table empresaConfig
+drop table empresa
